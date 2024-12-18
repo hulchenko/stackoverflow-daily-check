@@ -2,8 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import os
 
-load_dotenv()
-
 def login_to_stackoverflow():
     print("Getting ready to log in...")
 
