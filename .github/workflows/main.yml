@@ -5,6 +5,10 @@ on:
   schedule:
     - cron: "*/15 * * * *" # testing
 
+env:
+  EMAIL: ${{ secrets.EMAIL }}
+  PASSWORD: ${{secrets.PASSWORD }}
+
 jobs:
   run-python-script:
     runs-on: ubuntu-latest
