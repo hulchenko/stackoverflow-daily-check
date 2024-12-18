@@ -1,9 +1,9 @@
 name: Python Script Workflow
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # enables manual trigger
   schedule:
-    - cron: "*/15 * * * *" # testing
+    - cron: "0 4 * * *" # daily at 4AM
 
 env:
   EMAIL: ${{ secrets.EMAIL }}
