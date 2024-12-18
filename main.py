@@ -1,16 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
-from dotenv import load_dotenv
-import schedule
 import os
-import time
 
 load_dotenv()
 
 def login_to_stackoverflow():
+    print("Getting ready to log in...")
+
     # Credentials
-    email = os.getenv("EMAIL")
-    password = os.getenv("PASSWORD")
+    email = os.environ["EMAIL"]
+    password = os.environ["PASSWORD"]
 
     # Start a session
     session = requests.Session()
@@ -35,11 +34,4 @@ def login_to_stackoverflow():
     else:
         print("Login failed. Please check your credentials or handle CAPTCHA.")
 
-
-# Schedule login once a day
-schedule.every().day.at("01:27").do(login_to_stackoverflow)
-
-# Keep script running
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+login_to_stackoverflow()
