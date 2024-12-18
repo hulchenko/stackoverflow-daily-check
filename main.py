@@ -37,7 +37,7 @@ def login_to_stackoverflow():
 
 
 # Schedule login once a day
-schedule.every().day.at("12:00").do(login_to_stackoverflow)
+schedule.every().day.at("01:27").do(login_to_stackoverflow)
 
 # Keep script running
 while True:
