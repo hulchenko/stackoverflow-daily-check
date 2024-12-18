@@ -1,9 +1,8 @@
 name: Python Script Workflow
 
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: "36 1 * * *"
 
 jobs:
   run-python-script:
