@@ -9,27 +9,32 @@ def login_to_stackoverflow():
     email = os.environ["EMAIL"]
     password = os.environ["PASSWORD"]
 
-    # Start a session
-    session = requests.Session()
+    try:
+        # Start a session
+        session = requests.Session() # so that cookies are persisted
 
-    # Extract the CSRF token from the page
-    login_url = "https://stackoverflow.com/users/login"
-    response = session.get(login_url)
-    soup = BeautifulSoup(response.text, "html.parser")
-    csrf_token = soup.find("input", {"name": "fkey"})["value"]
+        # Extract the CSRF token from the page
+        login_url = "https://stackoverflow.com/users/login"
+        response = session.get(login_url)
+        soup = BeautifulSoup(response.text, "html.parser")
+        token = soup.find("input", {"name": "fkey"})["value"] # stackoverflow's form validation token
 
-    # Submit the form
-    payload = {
-        "email": email,
-        "password": password,
-        "fkey": csrf_token
-    }
-    login_response = session.post(login_url, data=payload)
+        # Submit the form
+        payload = {
+            "email": email,
+            "password": password,
+            "fkey": token
+        }
+        login_response = session.post(login_url, data=payload)
 
-    # Check if login was successful
-    if login_response.url == "https://stackoverflow.com/":
-        print("Login successful!")
-    else:
-        print("Login failed. Please check your credentials or handle CAPTCHA.")
+        # Check if login was successful
+        if "https://stackoverflow.com/" in login_response.url:
+            print("Login successful!")
+        else:
+            print("Login failed.")
+            print(f"Response URL: {login_response.url}")
+            print(f"Response text: {login_response.text}")
+    except Exception as error:
+        print(f"An unexpected error occured: {error}")
 
 login_to_stackoverflow()
