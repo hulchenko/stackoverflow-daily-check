@@ -3,7 +3,7 @@ name: Python Script Workflow
 on:
   workflow_dispatch: # enables manual trigger
   schedule:
-    - cron: "0 4 * * *" # daily at 4AM UTC
+    - cron: "0 4,16 * * *" # twice daily at 4 AM/PM UTC
 
 env:
   EMAIL: ${{ secrets.EMAIL }}
