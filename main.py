@@ -28,10 +28,17 @@ def login_to_stackoverflow():
         login_response = session.post(login_url, data=payload)
 
         # Check if login was successful
-        if "https://stackoverflow.com/" in login_response.url:
+        if login_response.status_code == 200 and "https://stackoverflow.com/" in login_response.url:
             print("Login successful!")
+            profile_url = "https://stackoverflow.com/users/current"
+            profile_response = session.get(profile_url)
+            if profile_response.status_code == 200 and "Summary" in profile_response.text:
+                print("Session is active!")
+            else:
+                print("Session failed!")
         else:
             print("Login failed.")
+            print(f"Response status: {login_response.status_code}")
             print(f"Response URL: {login_response.url}")
             print(f"Response text: {login_response.text}")
     except Exception as error:
